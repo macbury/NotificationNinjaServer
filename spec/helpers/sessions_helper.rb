@@ -5,4 +5,12 @@ module SessionsHelper
     get 'create', provider: provider.to_s
   end
 
+  def login_as(account)
+    controller.stub(:current_account).with(account)
+  end
+
+  def logout
+    controller.stub(:current_account).with(nil)
+  end
+
 end

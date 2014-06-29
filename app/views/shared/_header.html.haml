@@ -9,5 +9,9 @@
       %a.navbar-brand{href: "#"} Notification Ninja
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.pull-right
-        %li= link_to "Github.com", github_path
+        - if signed_in?
+          %li= current_account.inspect
+          %li= link_to t("header.logout"), logout_path
+        - else
+          %li= link_to "Github.com", github_path
     / /.nav-collapse

@@ -12,4 +12,11 @@ RSpec.describe SessionsController, :type => :controller do
     end
   end
 
+  it "should logout" do
+    get :destroy
+    expect(response).to redirect_to(root_path)
+    expect(flash[:success]).to eq(I18n.t("auth.logout"))
+    expect(cookies.signed["auth_token"]).to be_nil
+  end
+
 end

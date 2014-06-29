@@ -18,6 +18,12 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
+  def destroy
+    sign_out
+    flash[:success] = I18n.t("auth.logout")
+    redirect_to root_path
+  end
+
   private
 
     def auth_method
