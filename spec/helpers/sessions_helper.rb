@@ -9,6 +9,10 @@ module SessionsHelper
     controller.stub(:current_account).with(account)
   end
 
+  def login!
+    login_as(create(:account))
+  end
+
   def logout
     controller.stub(:current_account).with(nil)
   end

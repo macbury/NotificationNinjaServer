@@ -1,10 +1,11 @@
 class ChannelsController < ApplicationController
+  before_action :login_required!
   before_action :set_channel, only: [:show, :edit, :update, :destroy]
 
   # GET /channels
   # GET /channels.json
   def index
-    @channels = Channel.all
+    @channels = current_account.channels.all
   end
 
   # GET /channels/1
@@ -14,7 +15,7 @@ class ChannelsController < ApplicationController
 
   # GET /channels/new
   def new
-    @channel = Channel.new
+    @channel = current_account.channels.new
   end
 
   # GET /channels/1/edit
@@ -24,7 +25,7 @@ class ChannelsController < ApplicationController
   # POST /channels
   # POST /channels.json
   def create
-    @channel = Channel.new(channel_params)
+    @channel = current_account.channels.new(channel_params)
 
     respond_to do |format|
       if @channel.save
@@ -64,7 +65,7 @@ class ChannelsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_channel
-      @channel = Channel.find(params[:id])
+      @channel = current_account.channels.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
