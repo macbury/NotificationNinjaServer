@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140629103556) do
+ActiveRecord::Schema.define(version: 20140629184812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 20140629103556) do
   end
 
   add_index "accounts", ["session_key"], name: "index_accounts_on_session_key", using: :btree
+
+  create_table "channels", force: true do |t|
+    t.string   "name",                         null: false
+    t.string   "subscription_token", limit: 8, null: false
+    t.string   "push_token",         limit: 8, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "account_id"
+  end
+
+  add_index "channels", ["account_id"], name: "index_channels_on_account_id", using: :btree
+  add_index "channels", ["push_token"], name: "index_channels_on_push_token", unique: true, using: :btree
+  add_index "channels", ["subscription_token"], name: "index_channels_on_subscription_token", unique: true, using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+gem 'font-awesome-sass'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'angularjs-rails'
@@ -34,13 +35,13 @@ gem 'delayed_job_active_record'
 
 gem "omniauth"
 gem "omniauth-github"
-gem "omniauth-twitter"
 
 gem "haml-rails"
 
 gem "thin"
 gem "figaro"
 gem "quiet_assets"
+gem 'simple_form'
 
 group :push do
   gem 'push-core'

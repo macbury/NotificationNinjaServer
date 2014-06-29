@@ -10,8 +10,15 @@
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.pull-right
         - if signed_in?
-          %li= current_account.inspect
+          %li
+            = link_to '#' do
+              = icon('user')
+              = current_account.name
           %li= link_to t("header.logout"), logout_path
         - else
-          %li= link_to "Github.com", github_path
+          %li
+            = link_to github_path do
+              = icon('github')
+              Login using
+              %strong github.com
     / /.nav-collapse

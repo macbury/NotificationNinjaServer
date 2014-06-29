@@ -1,5 +1,6 @@
 class Account < ActiveRecord::Base
   validates :provider, :uid, :name, presence: true
+  has_many  :channels, dependent: :destroy
 
   def self.auth_with_github(omniauth)
     account     = Account.find_or_initialize_by(provider: omniauth["provider"], uid: omniauth["uid"])
