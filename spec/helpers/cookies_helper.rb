@@ -1,0 +1,3 @@
+module CookiesHelper
+
+end
