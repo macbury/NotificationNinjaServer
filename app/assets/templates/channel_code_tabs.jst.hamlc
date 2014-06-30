@@ -1,0 +1,9 @@
+%ul.nav.nav-tabs
+  %li{ "ng-class" => "{ active: channelCodeTabCtrl.isTab('bash') }" }
+    %a{href: "", "ng-click" => "channelCodeTabCtrl.setTab('bash')"} Bash
+  %li{ "ng-class" => "{ active: channelCodeTabCtrl.isTab('arduino') }" }
+    %a{href: "", "ng-click" => "channelCodeTabCtrl.setTab('arduino')"} Arduino
+  %li{ "ng-class" => "{ active: channelCodeTabCtrl.isTab('ruby') }" }
+    %a{href: "", "ng-click" => "channelCodeTabCtrl.setTab('ruby')"} Ruby
+
+%textarea.form-control{ readonly: true, "ng-show" => "channelCodeTabCtrl.isTab('bash')"  } curl -H "Content-Type: application/json" -d "{{ notification | param }}" {{ channel.push_url }}

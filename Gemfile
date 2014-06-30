@@ -36,6 +36,7 @@ gem 'delayed_job_active_record'
 gem "omniauth"
 gem "omniauth-github"
 
+gem 'haml_coffee_assets', github: "netzpirat/haml_coffee_assets"
 gem "haml-rails"
 
 gem "thin"

@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 channelManagerApp = angular.module("channelManagerApp", ['ngResource'])
 channelManagerApp.config ($httpProvider) ->
   authToken = $("meta[name=\"csrf-token\"]").attr("content")
@@ -20,19 +16,32 @@ channelManagerApp.controller "ChannelController", ["$scope", ($scope) ->
     url: "",
     message: ""
   }
+]
 
-  @setTab = (next_tab) -> @currentTab = next_tab
-  @getTab = -> @currentTab
-  @isTab  = (tab) -> (@currentTab == tab)
-
-  @setTab('bash')
+channelManagerApp.controller "NewChannelController" , ["$scope", ($scope) ->
+  $scope.channel = { name: "" }
 ]
 
 channelManagerApp.filter 'unsafe', ($sce) ->
   return (val) -> $sce.trustAsHtml(val)
 
 channelManagerApp.filter 'param', ($sce) ->
-  return (val) -> $.param(val)
+  return (val) -> $.param(val) if val?
+
+channelManagerApp.directive 'channelCodeExamples', ($parse) ->
+  restrict: "E",
+  template: JST["channel_code_tabs"](),
+  controller: ->
+    @setTab = (next_tab) -> @currentTab = next_tab
+    @getTab = -> @currentTab
+    @isTab  = (tab) -> (@currentTab == tab)
+
+    @setTab('bash')
+  controllerAs: 'channelCodeTabCtrl'
+
+channelManagerApp.directive 'channelNotificationForm', ($parse) ->
+  restrict: "E",
+  template: JST["channel_notification_form"]()
 
 channelManagerApp.directive "qrCode", ($parse) -> {
   restrict: "E",

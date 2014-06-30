@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/netzpirat/haml_coffee_assets.git
+  revision: 1c5038429dbcf14151759913352376107d62c891
+  specs:
+    haml_coffee_assets (1.16.0)
+      coffee-script (~> 2.0)
+      sprockets (~> 2.0)
+      tilt (~> 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -222,6 +231,7 @@ DEPENDENCIES
   figaro
   font-awesome-sass
   haml-rails
+  haml_coffee_assets!
   jbuilder (~> 2.0)
   jquery-rails
   omniauth

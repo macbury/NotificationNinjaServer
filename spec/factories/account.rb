@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :github, class: Account do
+  factory :github, class: Account, aliases: [:account] do
     provider "github"
     uid SecureRandom.hex(6)
     access_token SecureRandom.hex(6)

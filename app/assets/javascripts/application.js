@@ -16,4 +16,6 @@
 //= require angular
 //= require angular-animate
 //= require angular-resource
+//= require hamlcoffee
+//= require_tree ../templates
 //= require_tree .

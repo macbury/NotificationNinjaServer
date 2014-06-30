@@ -1,0 +1,18 @@
+%form.form-horizontal{ ng: { submit: "channelCtrl.sendNotification(notification)" } }
+  .form-group
+    %label.col-sm-2.control-label Title
+    .col-sm-10
+      %input.form-control{ name: "title", placeholder: "Notification title", "ng-model" => "notification.title" }
+  .form-group
+    %label.col-sm-2.control-label Action url
+    .col-sm-10
+      %input.form-control{ name: "url", placeholder: "Action url", "ng-model" => "notification.url" }
+  .form-group
+    %label.col-sm-2.control-label Message
+    .col-sm-10
+      %textarea.form-control{ name: "content", placeholder: "Message content", "ng-model" => "notification.message" }
+  .form-group
+    .col-sm-2.col-sm-offset-10
+      %a.btn.btn-md.btn-success.btn-block{ href: "#" }
+        %i.fa.fa-cloud-upload
+        Send
