@@ -6,4 +6,15 @@
   %li{ "ng-class" => "{ active: channelCodeTabCtrl.isTab('ruby') }" }
     %a{href: "", "ng-click" => "channelCodeTabCtrl.setTab('ruby')"} Ruby
 
-%textarea.form-control{ readonly: true, "ng-show" => "channelCodeTabCtrl.isTab('bash')"  } curl -H "Content-Type: application/json" -d "{{ notification | param }}" {{ channel.push_url }}
+%textarea.form-control{ readonly: true, "ng-show" => "channelCodeTabCtrl.isTab('bash')"  } curl -H "Content-Type: application/json" -d "{{ notification | param }}" {{ channel.push.url }}
+%textarea.form-control{ readonly: true, "ng-show" => "channelCodeTabCtrl.isTab('arduino')", rows: 7 }
+  EthernetClient client;
+  if (client.connect("{{ channel.push.host }}",{{ channel.push.port }})) {
+    client.println("POST {{ channel.push.path }} HTTP/1.1");
+    client.println("Host: {{ channel.push.host }}");
+    client.println("{{ notification | param }}")
+  }
+%textarea.form-control{ readonly: true, "ng-show" => "channelCodeTabCtrl.isTab('ruby')", rows: 7 }
+  require 'net/http'
+  uri = URI('{{ channel.push.url }}')
+  res = Net::HTTP.post_form(uri, {{ notification }})
