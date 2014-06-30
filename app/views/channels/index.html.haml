@@ -7,8 +7,11 @@
             = link_to '#', class: "btn btn-success btn-lg" do
               = icon("plus")
               Add channel
-          %h2 Your devices
+          %h2
+            Your channels
+            %small {{ channels.length }}
     .cards
+      %p{ ng: { show: "channels.length == 0" } } You dont have any channel yet
       .card{ "ng-repeat" => "channel in channels" }
         .row
           .col-md-12
