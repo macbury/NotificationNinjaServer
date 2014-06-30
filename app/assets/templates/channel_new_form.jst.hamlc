@@ -1,0 +1,18 @@
+.row{  }
+  .col-md-12
+    .page-header
+      %h2 Add channel
+    %form.form-horizontal{ "ng-submit": "form.createChannel(channels)", novalidate: true, name: "channelForm" }
+      .form-group
+        %label.col-sm-2.control-label Name
+        .col-sm-10
+          %input.form-control{ name: "name", placeholder: "Channel name", "ng-model" => "channel.name", required: true }
+      .form-group
+        .col-sm-2.col-sm-offset-8
+          %button.btn.btn-md.btn-primary.btn-block{ "ng-disabled" => "!channelForm.$valid" }
+            %i.fa.fa-save
+            Save
+        .col-sm-2
+          %a.btn.btn-md.btn-default.btn-block{ "ng-click" => "channelsCtrl.toggleForm()" }
+            %i.fa.fa-ban
+            Cancel

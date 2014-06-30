@@ -1,8 +1,8 @@
-%form.form-horizontal{ ng: { submit: "channelCtrl.sendNotification(notification)" } }
+%form.form-horizontal{ "ng-submit": "channelCtrl.sendNotification(notification)", novalidate: true, name: "noficationForm" }
   .form-group
     %label.col-sm-2.control-label Title
     .col-sm-10
-      %input.form-control{ name: "title", placeholder: "Notification title", "ng-model" => "notification.title" }
+      %input.form-control{ name: "title", placeholder: "Notification title", "ng-model" => "notification.title", required: true }
   .form-group
     %label.col-sm-2.control-label Action url
     .col-sm-10
@@ -10,9 +10,13 @@
   .form-group
     %label.col-sm-2.control-label Message
     .col-sm-10
-      %textarea.form-control{ name: "content", placeholder: "Message content", "ng-model" => "notification.message" }
+      %textarea.form-control{ name: "content", placeholder: "Message content", "ng-model" => "notification.message", required: true  }
   .form-group
-    .col-sm-2.col-sm-offset-10
-      %a.btn.btn-md.btn-success.btn-block{ href: "#" }
+    .col-sm-2.col-sm-offset-8
+      %a.btn.btn-md.btn-primary.btn-block{ href: "#", "ng-disabled" => "!noficationForm.$valid" }
         %i.fa.fa-cloud-upload
         Send
+    .col-sm-2
+      %a.btn.btn-md.btn-danger.btn-block{ href: "#", "ng-click" => "channelCtrl.destroy(channel)" }
+        %i.fa.fa-ban
+        Destroy

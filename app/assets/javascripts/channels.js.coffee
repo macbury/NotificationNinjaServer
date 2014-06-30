@@ -8,14 +8,33 @@ channelManagerApp.factory 'Channel', ($resource) -> $resource('/channels/:id.jso
 
 channelManagerApp.controller "ChannelsController", ['$scope', 'Channel', ($scope, Channel) ->
   $scope.channels = Channel.query()
+
+  @formVisible = false
+  @toggleForm  = -> @formVisible = !@formVisible
+
+  @remove      = (channel) ->
+    angular.forEach $scope.channels, (obj, index) ->
+      if (obj.id == channel.id)
+        return $scope.channels.splice(index, 1)
+
+  return this
 ]
 
-channelManagerApp.controller "ChannelController", ["$scope", ($scope) ->
+channelManagerApp.controller "ChannelController", ["$scope", "Channel", ($scope, Channel) ->
   $scope.notification = {
     title: "",
     url: "",
     message: ""
   }
+
+  @destroy = (channel) ->
+    if confirm("Are you sure?")
+      $scope.$parent.$parent.channelsCtrl.remove(channel)
+      Channel.delete({ id: channel.id }).$promise.then (result) ->
+        console.log(result)
+
+
+  return this
 ]
 
 channelManagerApp.controller "NewChannelController" , ["$scope", ($scope) ->
@@ -42,6 +61,21 @@ channelManagerApp.directive 'channelCodeExamples', ($parse) ->
 channelManagerApp.directive 'channelNotificationForm', ($parse) ->
   restrict: "E",
   template: JST["channel_notification_form"]()
+
+channelManagerApp.directive 'channelNewForm', ($parse) ->
+  restrict: "E",
+  template: JST["channel_new_form"]()
+  controllerAs: "form"
+  controller: ($scope, Channel) ->
+    @reset = -> $scope.channel = { name: "" }
+    @reset()
+    @createChannel = (channels) =>
+      Channel.save($scope.channel).$promise.then( (result) =>
+        channels.push(result)
+        $scope.channelsCtrl.toggleForm()
+        @reset()
+      )
+    return this
 
 channelManagerApp.directive "qrCode", ($parse) -> {
   restrict: "E",

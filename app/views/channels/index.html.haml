@@ -1,10 +1,11 @@
 %div{ "ng-app" => "channelManagerApp" }
   .channels{ "ng-controller" => "ChannelsController as channelsCtrl" }
+    %channel-new-form{ "ng-show" => "channelsCtrl.formVisible" }
     .row
       .col-md-12
         .page-header
           .pull-right
-            = link_to '#', class: "btn btn-success btn-lg" do
+            = link_to '#', class: "btn btn-success btn-lg", "ng-click" => "channelsCtrl.toggleForm()", "ng-hide" => "channelsCtrl.formVisible" do
               = icon("plus")
               Add channel
           %h2
@@ -12,12 +13,14 @@
             %small {{ channels.length }}
     .cards
       %p{ ng: { show: "channels.length == 0" } } You dont have any channel yet
-      .card{ "ng-repeat" => "channel in channels" }
+      .card{ "ng-repeat" => "channel in channels | orderBy: '-created_at'" }
         .row
           .col-md-12
             .panel.panel-primary
               .panel-heading
-                %h3.panel-title {{ channel.name }}
+                %h3.panel-title
+                  %i.fa.fa-send
+                  {{ channel.name }}
               .panel-body.row
                 .col-md-4
                   .well
