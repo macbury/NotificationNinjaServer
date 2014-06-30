@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   resources :channels
 
-  namespace :api do
+  namespace :api, default: { format: :json } do
     namespace :v1 do
-      post "/subscribe/:token" => "test#test"
-      post "/push/:token" => "test#test"
+      post "/subscribe/:token" => "test#test", as: :subscribe
+      post "/push/:token" => "test#test", as: :push
     end
   end
 

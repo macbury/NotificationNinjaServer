@@ -29,12 +29,12 @@ ActiveRecord::Schema.define(version: 20140629184812) do
   add_index "accounts", ["session_key"], name: "index_accounts_on_session_key", using: :btree
 
   create_table "channels", force: true do |t|
-    t.string   "name",                         null: false
-    t.string   "subscription_token", limit: 8, null: false
-    t.string   "push_token",         limit: 8, null: false
+    t.string   "name",                          null: false
+    t.string   "subscription_token", limit: 24, null: false
+    t.string   "push_token",         limit: 24, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id"
+    t.integer  "account_id",                    null: false
   end
 
   add_index "channels", ["account_id"], name: "index_channels_on_account_id", using: :btree

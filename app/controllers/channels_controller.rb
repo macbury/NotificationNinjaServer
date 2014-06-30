@@ -5,7 +5,7 @@ class ChannelsController < ApplicationController
   # GET /channels
   # GET /channels.json
   def index
-    @channels = current_account.channels.all
+    @channels = current_account.channels.order("name ASC")
   end
 
   # GET /channels/1

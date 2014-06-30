@@ -1,23 +1,50 @@
-%h1 Listing channels
-
-%table.table
-  %tr
-    %th Name
-    %th Subscription token
-    %th Push token
-    %th
-    %th
-    %th
-
-  - @channels.each do |channel|
-    %tr
-      %td= channel.name
-      %td= channel.subscription_token
-      %td= channel.push_token
-      %td= link_to 'Show', channel
-      %td= link_to 'Edit', edit_channel_path(channel)
-      %td= link_to 'Destroy', channel, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Channel', new_channel_path
+%div{ "ng-app" => "channelManagerApp" }
+  .channels{ "ng-controller" => "ChannelsController as channelsCtrl" }
+    .row
+      .col-md-12
+        .page-header
+          .pull-right
+            = link_to '#', class: "btn btn-success btn-lg" do
+              = icon("plus")
+              Add channel
+          %h2 Your devices
+    .cards
+      .card{ "ng-repeat" => "channel in channels" }
+        .row
+          .col-md-12
+            .panel.panel-primary
+              .panel-heading
+                %h3.panel-title {{ channel.name }}
+              .panel-body.row
+                .col-md-4
+                  .well
+                    %qr-code{ "ng-model" => "channel.subscribe_url" }
+                  %p
+                    %input.form-control.input-sm{ "ng-value" => "channel.subscribe_url", "readonly" => true }
+                .col-md-8{ "ng-controller" => "ChannelController as channelCtrl" }
+                  %form.form-horizontal
+                    .form-group
+                      %label.col-sm-2.control-label Title
+                      .col-sm-10
+                        %input.form-control{ name: "title", placeholder: "Notification title", "ng-model" => "notification.title" }
+                    .form-group
+                      %label.col-sm-2.control-label Action url
+                      .col-sm-10
+                        %input.form-control{ name: "url", placeholder: "Action url", "ng-model" => "notification.url" }
+                    .form-group
+                      %label.col-sm-2.control-label Message
+                      .col-sm-10
+                        %textarea.form-control{ name: "content", placeholder: "Message content", "ng-model" => "notification.message" }
+                    .form-group
+                      .col-sm-2.col-sm-offset-10
+                        %a.btn.btn-md.btn-success.btn-block{ href: "#" }
+                          = icon("cloud-upload")
+                          Send
+                  %ul.nav.nav-tabs
+                    %li{ "ng-class" => "{ active: channelCtrl.isTab('bash') }" }
+                      %a{href: "", "ng-click" => "channelCtrl.setTab('bash')"} Bash
+                    %li{ "ng-class" => "{ active: channelCtrl.isTab('arduino') }" }
+                      %a{href: "", "ng-click" => "channelCtrl.setTab('arduino')"} Arduino
+                    %li{ "ng-class" => "{ active: channelCtrl.isTab('ruby') }" }
+                      %a{href: "", "ng-click" => "channelCtrl.setTab('ruby')"} Ruby
+                  %textarea.form-control{ readonly: true, "ng-show" => "channelCtrl.isTab('bash')"  } curl -H "Content-Type: application/json" -d "{{ notification | param }}" {{ channel.push_url }}
