@@ -6,15 +6,15 @@ module SessionsHelper
   end
 
   def login_as(account)
-    controller.stub(:current_account).with(account)
+    allow(controller).to receive(:current_account).and_return(account)
   end
 
   def login!
     login_as(create(:account))
   end
 
-  def logout
-    controller.stub(:current_account).with(nil)
+  def logout!
+    allow(controller).to receive(:current_account).and_return(nil)
   end
 
 end
