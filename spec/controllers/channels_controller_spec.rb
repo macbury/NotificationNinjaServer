@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ChannelsController, type: :controller do
-
+  render_views
   describe "as logged in user" do
     let(:account) { create(:account) }
     let(:channel) { account.channels.create(attributes_for(:example_channel)) }
@@ -20,8 +20,10 @@ RSpec.describe ChannelsController, type: :controller do
       end
 
       it "responds to json" do
+        10.times { account.channels.create(attributes_for(:example_channel)) }
         get :index, format: :json
         expect(response).to be_success
+        expect{ JSON.parse(response.body) }.not_to raise_error
       end
     end
 
